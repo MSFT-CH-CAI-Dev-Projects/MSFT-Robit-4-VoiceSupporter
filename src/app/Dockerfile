@@ -11,6 +11,9 @@ RUN apt-get update && apt-get install -y \
 # Create a virtualenv to keep dependencies together
 RUN python -m venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
+# Central Feed Services (CFS): direct pypi.org / files.pythonhosted.org access is
+# blocked on Microsoft-managed devices; install through the approved proxy feed.
+ENV PIP_INDEX_URL=https://packagefeedproxy.microsoft.io/pypi/simple
 COPY ./requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
